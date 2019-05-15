@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Node chat app</title>
+</head>
+<body>
+	<p>Welcome to the node chat app</p>
+
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+		//initiating request to server to open websocket
+		var socket = io();
+		socket.on('connect', () => {
+			console.log('connected to server');
+		})
+	</script>
+</body>
+</html>
