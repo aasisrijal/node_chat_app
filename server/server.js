@@ -3,6 +3,8 @@ const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
 
+const {generateMessage} = require('./utils/message');
+
 const publicPath = path.join(__dirname, '../public');
 const port = process.env.PORT || 3000; 
 
@@ -19,29 +21,25 @@ io.on('connection', (socket) => {
 			console.log('user disconnected');
 		})
 
+	//socket.emit from Admin text Welcome to chat app
+	socket.emit('newMessage', generateMessage('Admin', 'Welcome to chat app'))
+
+	//socket.broadcaast.emit from Admin text New user joines
+	socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined')) 
+
 	//listening to event emitted by the client
 	socket.on('createMessage', (message) =>{
 		console.log('created message', message);
 		//io.emit emits to all the users but socket.emit to one only 
-		// io.emit('newMessage', {
+		io.emit('newMessage', generateMessage(message.from, message.text))
+		// socket.broadcast.emit('newMessage', {
 		// 	from: message.from,
-		// 	text: message.text,
+		// 	text: message.text, 
 		// 	createdAt: new Date().getTime()
-		// })
-		socket.broadcast.emit('newMessage', {
-			from: message.from,
-			text: message.text, 
-			createdAt: new Date().getTime()
-		})
+		
 	})
-
-	//event emitted by server
-	// socket.emit('newMessage', {
-	// 	from: 'aasis',
-	// 	text: 'can you come to my house',
-	// 	createdAt: '123'
-	// })
 })
+
 
 server.listen(port, () =>{
 	console.log(`Server is running on ${port}`);
