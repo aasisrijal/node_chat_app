@@ -22,9 +22,15 @@ io.on('connection', (socket) => {
 	//listening to event emitted by the client
 	socket.on('createMessage', (message) =>{
 		console.log('created message', message);
-		io.emit('newMessage', {
+		//io.emit emits to all the users but socket.emit to one only 
+		// io.emit('newMessage', {
+		// 	from: message.from,
+		// 	text: message.text,
+		// 	createdAt: new Date().getTime()
+		// })
+		socket.broadcast.emit('newMessage', {
 			from: message.from,
-			text: message.text,
+			text: message.text, 
 			createdAt: new Date().getTime()
 		})
 	})
