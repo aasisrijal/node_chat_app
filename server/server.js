@@ -18,24 +18,23 @@ io.on('connection', (socket) => {
 	socket.on('disconnect', () => {
 			console.log('user disconnected');
 		})
-	// socket.on('createEmail', (newEmail) =>{
-	// 	console.log('createEmail', newEmail);
+
+	//listening to event emitted by the client
+	socket.on('createMessage', (message) =>{
+		console.log('created message', message);
+		io.emit('newMessage', {
+			from: message.from,
+			text: message.text,
+			createdAt: new Date().getTime()
+		})
+	})
+
+	//event emitted by server
+	// socket.emit('newMessage', {
+	// 	from: 'aasis',
+	// 	text: 'can you come to my house',
+	// 	createdAt: '123'
 	// })
-
-	// socket.emit('newEmail', {
-	// 	from: 'mikee@gmail.com',
-	// 	text: 'how are you? call me soon'
-	// });
-
-	socket.on('createMessage', (newMessage) =>{
-		console.log('created message', newMessage);
-	})
-
-	socket.emit('newMessage', {
-		from: 'aasis',
-		text: 'can you come to my house',
-		createdAt: '123'
-	})
 })
 
 server.listen(port, () =>{

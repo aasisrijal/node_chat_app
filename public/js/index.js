@@ -5,11 +5,11 @@ socket.on('connect', () => {
 	console.log('connected to server');
 
 	//creating new message by the user
-	socket.emit('createMessage', {
-		from: 'harry',
-		text: 'i have no money',
-		createdAt: '345'
-	})
+	// socket.emit('createMessage', {
+	// 	from: 'harry',
+	// 	text: 'i have no money',
+	// 	createdAt: '345'
+	// })
 })
 socket.on('disconnect', () => {
 	console.log('dicconnected from server');
