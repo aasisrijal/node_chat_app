@@ -28,10 +28,11 @@ io.on('connection', (socket) => {
 	socket.broadcast.emit('newMessage', generateMessage('Admin', 'New user joined')) 
 
 	//listening to event emitted by the client
-	socket.on('createMessage', (message) =>{
+	socket.on('createMessage', (message, callback) =>{
 		console.log('created message', message);
 		//io.emit emits to all the users but socket.emit to one only 
 		io.emit('newMessage', generateMessage(message.from, message.text))
+		callback('this is from server yo');
 		// socket.broadcast.emit('newMessage', {
 		// 	from: message.from,
 		// 	text: message.text, 
